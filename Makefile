@@ -76,3 +76,31 @@ build.helm.binary:
 		--output output \
 		--target output \
 		automation/helm/
+
+# hadolint
+
+build.hadolint.binary: version ?= latest
+build.hadolint.binary:
+	docker build \
+		--file linter/hadolint/Dockerfile \
+		--build-arg VERSION=${version} \
+		--output output \
+		--target output \
+		linter/hadolint/
+
+# cooker
+
+build.cooker.image: registry ?= sovitsky
+build.cooker.image: packer_version ?= "1.9.2"
+build.cooker.image: ansible_version ?= "8.3.0"
+build.cooker.image: cooker_version ?= latest
+build.cooker.image: network ?= host
+build.cooker.image:
+	docker build \
+		--file cooker/Dockerfile \
+		--build-arg PACKER_VERSION=${packer_version} \
+		--build-arg ANSIBLE_VERSION=${ansible_version} \
+		--tag ${registry}/cooker:${cooker_version} \
+		cooker/
+
+	docker push ${registry}/cooker:${cooker_version}

@@ -1,0 +1,23 @@
+#cloud-config
+autoinstall:
+  version: 1
+
+  locale: en_US.UTF-8
+  keyboard:
+    layout: us
+
+  identity:
+    hostname: user
+    username: user
+    password: $6$tj1rsTwgLcuBPhA9$GX3DQjeLH46tK2MOnPRc0UfvmnTpoQ4pjb4eoShUbmXeprJAoGNZARNdHJlxhoMp1P7JcAR16LMJQTtUA2hKx/
+
+  ssh:
+    allow-pw: true
+    install-server: true
+
+  user-data:
+    timezone: UTC
+
+  late-commands:
+    - "echo 'user ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/user"
+    - "chmod 440 /target/etc/sudoers.d/user"

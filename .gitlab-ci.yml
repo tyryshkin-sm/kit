@@ -1,0 +1,12 @@
+stages:
+  - build
+
+build:
+  stage: build
+  only:
+    - /^\d+\.\d+\.\d+$/
+  tags:
+    - shell
+  script:
+    - docker login -u "gitlab-ci-token" -p ${CI_JOB_TOKEN} ${CI_REGISTRY}
+    - make build version=${CI_COMMIT_REF_NAME}
