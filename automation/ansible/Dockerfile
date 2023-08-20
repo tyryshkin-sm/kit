@@ -1,6 +1,6 @@
 FROM alpine:3.14
 ARG VERSION
-ENV VERSION=${VERSION:-4.8.0}
+ENV VERSION=${VERSION:-8.2.0}
 RUN apk add -U \
     alpine-sdk \
     rust \
